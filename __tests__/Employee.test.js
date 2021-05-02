@@ -1,9 +1,30 @@
 const Employee = require('../lib/Employee');
 
 test('create employee object', () => {
-    const employee = new Employee('Jane',1,"email");
+    let employee = new Employee('Jane',1,"email");
 
     expect(employee.name).toBe('Jane');
     expect(employee.id).toEqual(expect.any(Number));
     expect(employee.email).toEqual(expect.any(String));
-})
+});
+
+//test if the method get the name entered by the user
+test('gets employee name', () => {
+    let employee = new Employee('Jane', 1, "email");
+
+    expect(employee.getName()).toEqual(expect.any(String));
+});
+
+//test if the method gets the id entered by the user
+test('gets employee id', () => {
+    let employee = new Employee('Jane',1,'email');
+
+    expect(employee.getId()).toEqual(expect.any(Number));
+});
+
+//test if the method gets email id entered by the user
+test('gets employee email', () => {
+    let employee = new Employee('Jane', 1, "email")
+
+    expect(employee.getEmail()).toEqual(expect.any(String));
+});
