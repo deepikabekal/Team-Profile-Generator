@@ -138,12 +138,35 @@ const internQ = () => {
     ]);
 };
 
+//function to send the appropriate prompt to the user based on the menu selection
+function getUserChoice(userchoice){
+    if (userchoice === 'Engineer')
+    {
+        return commonQuestions(userchoice);
+    }
+    else if (userchoice === 'Intern')
+    {
+        return commonQuestions(userchoice);
+    }
+    else
+    {
+        return "";
+    }
+}
+
+
+
 commonQuestions(empDesignation)
-.then(data => {
+.then (data => {
     console.log(data);
     commonAnswer.push(data);
-    managerQuestion();
+    return managerQuestion()
 })
-.then(managerData => {
+.then (managerData => {
     console.log(managerData);
+    commonAnswer.push(managerData);
+    return menuPrompt();
+})
+.then (menuData => {
+    console.log("menu data", menuData);
 })
