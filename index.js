@@ -74,19 +74,15 @@ const menuPrompt = () => {
 const managerQuestion = () => {
     return inquirer.prompt([
         {
-            type : "number",
+            type : "input",
             name : "phone",
             message : "Enter manager's phone number.",
             validate : phoneInput => {
-                if (phoneInput)
+                if (isNaN(phoneInput))
                 {
-                    return true;
+                    return "Incorrect Entry! Please enter a number.";
                 }
-                else
-                {
-                    console.log('Incorrect Entry! Try Again!');
-                    return false;
-                }
+                return true;
             }
         }
     ]);
