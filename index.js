@@ -3,6 +3,8 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 var empDesignation = "manager";
 var commonAnswer = [];
+const exitMessage = `Your Team Profile is generated!
+You can find the file in dist folder.`
 //array of common quesions
 const commonQuestions = (empDesignation) => {
     return inquirer.prompt([
@@ -90,7 +92,7 @@ const managerQuestion = () => {
 
 
 //array of question if the user chooses engineer
-const engineerQ = () => {
+const engineerQuestion = () => {
     return inquirer.prompt([
         {
             type : "input",
@@ -112,7 +114,7 @@ const engineerQ = () => {
 };
 
 //array of question if the user choose intern
-const internQ = () => {
+const internQuestion = () => {
     return inquirer.prompt([
         {
             type : "input",
@@ -134,13 +136,6 @@ const internQ = () => {
     ]);
 };
 
-//function to send the appropriate prompt to the user based on the menu selection
-function getUserChoice(userchoice){
-    
-}
-
-
-
 commonQuestions(empDesignation)
 .then (data => {
     console.log(data);
@@ -156,11 +151,7 @@ commonQuestions(empDesignation)
     console.log("menu data", menuData);
     empDesignation = menuData.menu;
     console.log(empDesignation);
-    if (empDesignation === 'Engineer')
-    {
-        return commonQuestions(empDesignation);
-    }
-    else if (empDesignation === 'Intern')
+    if (empDesignation === 'Engineer' || empDesignation === 'Intern')
     {
         return commonQuestions(empDesignation);
     }
@@ -170,11 +161,21 @@ commonQuestions(empDesignation)
     }
     
 })
-.then (userChoiceData => {
-    console.log("userChoiceData",userChoiceData);
-    if (!userChoiceData)
+.then ((empDesignation,empCommonData)  => {
+    console.log("employee data",empCommonData);
+    if (!empDesignation)
     {
-        console.log ("Finished Building The Team!");
-        console.log("You can find the file in dist folder.");
+        return console.log(exitMessage);    
     }
-});
+    else if (empDesignation === 'Engineer')
+    {
+        return engineerQuestion();
+    }
+    else 
+    {
+        return internQuestion();
+    }
+})
+.then (empData => {
+    console.log("empData",empData);
+})
