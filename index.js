@@ -136,18 +136,7 @@ const internQ = () => {
 
 //function to send the appropriate prompt to the user based on the menu selection
 function getUserChoice(userchoice){
-    if (userchoice === 'Engineer')
-    {
-        return commonQuestions(userchoice);
-    }
-    else if (userchoice === 'Intern')
-    {
-        return commonQuestions(userchoice);
-    }
-    else
-    {
-        return "";
-    }
+    
 }
 
 
@@ -165,4 +154,27 @@ commonQuestions(empDesignation)
 })
 .then (menuData => {
     console.log("menu data", menuData);
+    empDesignation = menuData.menu;
+    console.log(empDesignation);
+    if (empDesignation === 'Engineer')
+    {
+        return commonQuestions(empDesignation);
+    }
+    else if (empDesignation === 'Intern')
+    {
+        return commonQuestions(empDesignation);
+    }
+    else
+    {
+        return "";
+    }
+    
 })
+.then (userChoiceData => {
+    console.log("userChoiceData",userChoiceData);
+    if (!userChoiceData)
+    {
+        console.log ("Finished Building The Team!");
+        console.log("You can find the file in dist folder.");
+    }
+});
