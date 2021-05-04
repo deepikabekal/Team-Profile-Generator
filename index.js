@@ -1,13 +1,13 @@
 //packages needed for the application
 const inquirer = require('inquirer');
 const fs = require('fs');
-var empDesignation = "manager";
-var commonAnswer = [];
+var empDesignation = "Manager";
+var employeeData = [];
 const exitMessage = `Your Team Profile is generated!
 You can find the file in dist folder.`
 //array of common quesions
-const commonQuestions = (empDesignation) => {
-    return inquirer.prompt([
+var commonQuestions = (empDesignation) => {
+    inquirer.prompt([
         {
             type : 'input',
             name : 'name', 
@@ -57,24 +57,35 @@ const commonQuestions = (empDesignation) => {
                 }
             }
         }
-    ]);
+    ])
+    .then ((data) => {
+        employeeData = [];
+        employeeData.push(data);
+        console.log("employee data", employeeData);    
+        checkEmployee(employeeData); 
+    });
+    
 };
 
-//prompt menu question
-const menuPrompt = () => {
-    return inquirer.prompt([
-        {
-            type : "list",
-            name : "menu", 
-            message : "Choose one of the following : ",
-            choices : ["Engineer", "Intern", "Finish Building My Team."] 
-        }
-    ]);
-};
+function checkEmployee(employeeData) {
+    switch (empDesignation) {
+        case "Manager":
+            managerQuestion(employeeData);
+            break;
+        case "Engineer" :
+            engineerQuestion(employeeData);
+            break;
+        case "Intern" : 
+            internQuestion(employeeData)
+            break;
+        default :
+            console.log("help");
+    } 
+}
 
 //array of questions for manager
 const managerQuestion = () => {
-    return inquirer.prompt([
+    inquirer.prompt([
         {
             type : "input",
             name : "phone",
@@ -87,13 +98,43 @@ const managerQuestion = () => {
                 return true;
             }
         }
-    ]);
+    ])
+    .then (data => {
+        employeeData.push(data);
+        console.log("employee data with number", employeeData);
+        menuPrompt();
+    })
+};
+
+//prompt menu question
+const menuPrompt = () => {
+    inquirer.prompt([
+        {
+            type : "list",
+            name : "menu", 
+            message : "Choose one of the following : ",
+            choices : ["Engineer", "Intern", "Finish Building My Team."] 
+        }
+    ])
+    .then (menuData => {
+        empDesignation = menuData.menu;
+        console.log(empDesignation);
+        if (empDesignation === 'Engineer' || empDesignation === 'Intern')
+        {
+            return commonQuestions(empDesignation);
+        }
+        else
+        {
+            return console.log(exitMessage);
+        }
+
+    })
 };
 
 
 //array of question if the user chooses engineer
 const engineerQuestion = () => {
-    return inquirer.prompt([
+    inquirer.prompt([
         {
             type : "input",
             name : "github",
@@ -110,12 +151,17 @@ const engineerQuestion = () => {
                 }
             }
         }
-    ]);
+    ])
+    .then (data => {
+        employeeData.push(data);
+        console.log("employee data with number", employeeData);
+        menuPrompt();
+    })
 };
 
 //array of question if the user choose intern
 const internQuestion = () => {
-    return inquirer.prompt([
+    inquirer.prompt([
         {
             type : "input",
             name : "school", 
@@ -133,49 +179,12 @@ const internQuestion = () => {
             }
                 
         }
-    ]);
+    ])
+    .then (data => {
+        employeeData.push(data);
+        console.log("employee data with number", employeeData);
+        menuPrompt();
+    })
 };
 
-commonQuestions(empDesignation)
-.then (data => {
-    console.log(data);
-    commonAnswer.push(data);
-    return managerQuestion()
-})
-.then (managerData => {
-    console.log(managerData);
-    commonAnswer.push(managerData);
-    return menuPrompt();
-})
-.then (menuData => {
-    console.log("menu data", menuData);
-    empDesignation = menuData.menu;
-    console.log(empDesignation);
-    if (empDesignation === 'Engineer' || empDesignation === 'Intern')
-    {
-        return commonQuestions(empDesignation);
-    }
-    else
-    {
-        return "";
-    }
-    
-})
-.then ((empDesignation,empCommonData)  => {
-    console.log("employee data",empCommonData);
-    if (!empDesignation)
-    {
-        return console.log(exitMessage);    
-    }
-    else if (empDesignation === 'Engineer')
-    {
-        return engineerQuestion();
-    }
-    else 
-    {
-        return internQuestion();
-    }
-})
-.then (empData => {
-    console.log("empData",empData);
-})
+ commonQuestions(empDesignation);
