@@ -28,3 +28,10 @@ test('gets employee email', () => {
 
     expect(employee.getEmail()).toEqual(expect.any(String));
 });
+
+//test if the method gets the role
+test('gets employee role', () => {
+    let employee = new Employee('Jane', 1, "email");
+
+    expect(employee.getRole()).toEqual('Employee');
+})
