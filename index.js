@@ -1,6 +1,7 @@
 //packages needed for the application
 const inquirer = require('inquirer');
 const fs = require('fs');
+const initialSection = require ('./src/page-template')
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
@@ -15,6 +16,7 @@ You can find the file in dist folder.`
 
 //array of common quesions
 var commonQuestions = (empDesignation) => {
+    console.log("Answer the questions to build your team!");
     inquirer.prompt([
         {
             type : 'input',
@@ -110,9 +112,11 @@ const managerQuestion = () => {
     ])
     .then (data => {
         employeeData.push(data);
-        console.log("employee data with number", employeeData);
-        const manager = new Manager(employeeData.name, employeeData.id, employeeData.email, employeeData.phone);
+        //console.log("employee data with number", employeeData);
+        const manager = new Manager(employeeData[0].name, employeeData[0].id, employeeData[0].email, employeeData[1].phone);
+        //console.log(manager);
         employeeObjectArray.push(manager);
+        //console.log(employeeObjectArray);
         menuPrompt();
     })
 };
@@ -129,7 +133,7 @@ const menuPrompt = () => {
     ])
     .then (menuData => {
         empDesignation = menuData.menu;
-        console.log(empDesignation);
+        //console.log(empDesignation);
         if (empDesignation === 'Engineer' || empDesignation === 'Intern')
         {
             return commonQuestions(empDesignation);
@@ -165,9 +169,10 @@ const engineerQuestion = () => {
     ])
     .then (data => {
         employeeData.push(data);
-        console.log("employee data with number", employeeData);
-        const engineer = new Engineer (employeeData.name, employeeData.id, employeeData.email, employeeData.github);
+        //console.log("employee data with number", employeeData);
+        const engineer = new Engineer (employeeData[0].name, employeeData[0].id, employeeData[0].email, employeeData[1].github);
         employeeObjectArray.push(engineer);
+        //console.log(employeeObjectArray);
         menuPrompt();
     })
 };
@@ -195,11 +200,14 @@ const internQuestion = () => {
     ])
     .then (data => {
         employeeData.push(data);
-        console.log("employee data with number", employeeData);
-        const intern = new Intern (employeeData.name, employeeData.id, employeeData.email, employeeData.school);
+        //console.log("employee data with number", employeeData);
+        const intern = new Intern (employeeData[0].name, employeeData[0].id, employeeData[0].email, employeeData[1].school);
         employeeObjectArray.push(intern);
+        //console.log(employeeObjectArray);
         menuPrompt();
     })
 };
 
  commonQuestions(empDesignation);
+
+ initialSection(employeeObjectArray);
