@@ -1,10 +1,18 @@
 //packages needed for the application
 const inquirer = require('inquirer');
 const fs = require('fs');
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+
+//variables
 var empDesignation = "Manager";
-var employeeData = [];
+var employeeData = []; //array to store each employee data
+var employeeObjectArray = []; //array to store each employee object thats created
 const exitMessage = `Your Team Profile is generated!
 You can find the file in dist folder.`
+
+
 //array of common quesions
 var commonQuestions = (empDesignation) => {
     inquirer.prompt([
@@ -61,12 +69,13 @@ var commonQuestions = (empDesignation) => {
     .then ((data) => {
         employeeData = [];
         employeeData.push(data);
-        console.log("employee data", employeeData);    
+        //console.log("employee data", employeeData);    
         checkEmployee(employeeData); 
     });
     
 };
 
+//depending on the employee designation appropriate functions are called.
 function checkEmployee(employeeData) {
     switch (empDesignation) {
         case "Manager":
@@ -102,6 +111,8 @@ const managerQuestion = () => {
     .then (data => {
         employeeData.push(data);
         console.log("employee data with number", employeeData);
+        const manager = new Manager(employeeData.name, employeeData.id, employeeData.email, employeeData.phone);
+        employeeObjectArray.push(manager);
         menuPrompt();
     })
 };
@@ -155,6 +166,8 @@ const engineerQuestion = () => {
     .then (data => {
         employeeData.push(data);
         console.log("employee data with number", employeeData);
+        const engineer = new Engineer (employeeData.name, employeeData.id, employeeData.email, employeeData.github);
+        employeeObjectArray.push(engineer);
         menuPrompt();
     })
 };
@@ -183,6 +196,8 @@ const internQuestion = () => {
     .then (data => {
         employeeData.push(data);
         console.log("employee data with number", employeeData);
+        const intern = new Intern (employeeData.name, employeeData.id, employeeData.email, employeeData.school);
+        employeeObjectArray.push(intern);
         menuPrompt();
     })
 };
