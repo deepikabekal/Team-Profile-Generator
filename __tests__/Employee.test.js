@@ -12,21 +12,21 @@ test('create employee object', () => {
 test('gets employee name', () => {
     let employee = new Employee('Jane', 1, "email");
 
-    expect(employee.getName()).toEqual(expect.any(String));
+    expect(employee.getName()).toEqual('Jane');
 });
 
 //test if the method gets the id entered by the user
 test('gets employee id', () => {
     let employee = new Employee('Jane',1,'email');
 
-    expect(employee.getId()).toEqual(expect.any(Number));
+    expect(employee.getId()).toEqual(1);
 });
 
 //test if the method gets email id entered by the user
 test('gets employee email', () => {
     let employee = new Employee('Jane', 1, "email")
 
-    expect(employee.getEmail()).toEqual(expect.any(String));
+    expect(employee.getEmail()).toEqual('email');
 });
 
 //test if the method gets the role
@@ -34,4 +34,25 @@ test('gets employee role', () => {
     let employee = new Employee('Jane', 1, "email");
 
     expect(employee.getRole()).toEqual('Employee');
+});
+
+//test if the method gets the name
+test('gets employee name', () => {
+    let employee = new Employee('Jane', 1, "email");
+
+    expect(employee.getName()).toEqual('Jane');
+});
+
+//test if the method gets the id
+test('gets employee id', () => {
+    let employee = new Employee('Jane', 1, "email");
+
+    expect(employee.getId()).toEqual(1);
+});
+
+//test if the method gets the email
+test('gets employee email', () => {
+    let employee = new Employee('Jane', 1, "email");
+
+    expect(employee.getEmail()).toEqual('email');
 })
