@@ -144,7 +144,7 @@ function menuPrompt (employeeObjectArray) {
         }
         else
         {
-            console.log("emp object", employeeObjectArray);
+            //console.log("emp object", employeeObjectArray);
             //const htmlPage = generatePage(employeeObjectArray);
             fs.writeFileSync(filePath, generatePage(employeeObjectArray));
             fs.copyFileSync('./src/style.css', './dist/style.css');
