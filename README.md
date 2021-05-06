@@ -38,7 +38,7 @@ node index.js
 2. Answer all the questions. 
 
 ## Preview
-<img src="assets/images/Walkthrough.gif" width=200 height = 200>
+<img src="assets/walkthrough.gif" width=200 height = 200>
 
 ## User Story
 ```
