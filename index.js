@@ -5,11 +5,13 @@ const initialSection = require ('./src/page-template')
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const generatePage = require('./src/page-template');
 
 //variables
 var empDesignation = "Manager";
 var employeeData = []; //array to store each employee data
 var employeeObjectArray = []; //array to store each employee object thats created
+const filePath = './dist/index.html'
 const exitMessage = `Your Team Profile is generated!
 You can find the file in dist folder.`
 
@@ -40,7 +42,8 @@ var commonQuestions = (empDesignation) => {
             name : 'id', 
             message : `Enter ${empDesignation}'s employee ID.`,
             validate : idInput => {
-                if (idInput)
+                const pass = idInput.match(/^[1-9]\d*$/);
+                if (pass)
                 {
                     return true;
                 }
@@ -56,13 +59,14 @@ var commonQuestions = (empDesignation) => {
             name : "email",
             message : `Enter ${empDesignation}'s email id`,
             validate : emailInput => {
-                if(emailInput)
+                const pass = emailInput.match( /\S+@\S+\.\S+/);
+                if(pass)
                 {
                     return true;
                 }
                 else 
                 {
-                    console.log("Incorrect Entry! Try again!");
+                    console.log("Incorrect Entry! Please enter a valid email id.");
                     return false;
                 }
             }
@@ -117,12 +121,12 @@ const managerQuestion = () => {
         //console.log(manager);
         employeeObjectArray.push(manager);
         //console.log(employeeObjectArray);
-        menuPrompt();
+        menuPrompt(employeeObjectArray);
     })
 };
 
 //prompt menu question
-const menuPrompt = () => {
+function menuPrompt (employeeObjectArray) {
     inquirer.prompt([
         {
             type : "list",
@@ -140,7 +144,11 @@ const menuPrompt = () => {
         }
         else
         {
-            return console.log(exitMessage);
+            console.log("emp object", employeeObjectArray);
+            //const htmlPage = generatePage(employeeObjectArray);
+            fs.writeFileSync(filePath, generatePage(employeeObjectArray));
+            fs.copyFileSync('./src/style.css', './dist/style.css');
+            console.log(exitMessage);
         }
 
     })
@@ -173,7 +181,7 @@ const engineerQuestion = () => {
         const engineer = new Engineer (employeeData[0].name, employeeData[0].id, employeeData[0].email, employeeData[1].github);
         employeeObjectArray.push(engineer);
         //console.log(employeeObjectArray);
-        menuPrompt();
+        menuPrompt(employeeObjectArray);
     })
 };
 
@@ -204,10 +212,11 @@ const internQuestion = () => {
         const intern = new Intern (employeeData[0].name, employeeData[0].id, employeeData[0].email, employeeData[1].school);
         employeeObjectArray.push(intern);
         //console.log(employeeObjectArray);
-        menuPrompt();
+        menuPrompt(employeeObjectArray);
     })
 };
 
- commonQuestions(empDesignation);
+ commonQuestions(empDesignation)
 
- initialSection(employeeObjectArray);
+ 
+ 
