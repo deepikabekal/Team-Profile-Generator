@@ -1,0 +1,23 @@
+#heading {
+    text-align: center;
+}
+
+header {
+    height: 70px;
+    background-color: darkseagreen;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+#emp-heading-row {
+    background-color:rgb(211, 247, 211);
+}
+
+#emp-container {
+    border: none;
+    box-shadow: 3px 5px 8px #888888;
+    border-radius: 10px;
+    margin: 10px;
+}
